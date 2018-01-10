@@ -1,0 +1,31 @@
+export default class ButtonBlockUtil {
+	constructor() {
+		this.timerInstance = null;
+		this.isActived = false;
+	}
+
+	isBlocking = (timer = 5000) => {
+		if (this.isActived === false) {
+			this.start(timer);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	start(timer = 5000, callback) {
+		this.isActived = true;
+		this.callback = callback;
+		this.timerInstance = setTimeout(() => {
+			this.stop();
+		}, timer);
+	}
+
+	stop() {
+		this.isActived = false;
+		clearTimeout(this.timerInstance);
+		if (this.callback) {
+			this.callback();
+		}
+	}
+}
